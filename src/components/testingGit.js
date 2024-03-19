@@ -5,6 +5,7 @@ class TestingGit extends Component {
     return (
       <div>
         <h1>hello</h1>
+        <p>this para is added here</p>
       </div>
     )
   }
