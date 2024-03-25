@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Home from './components/Home'
 import Jobs from './components/Jobs'
 import NotFound from './components/NotFound'
+import Login from './components/Login'
 
 // These are the lists used in the application. You can move them to any component needed.
 const employmentTypesList = [
@@ -49,6 +50,7 @@ const App = () => (
   <div>
     <Header />
     <Switch>
+      <Route exact path="/login" component={Login} />
       <Route exact path="/" component={Home} />
       <Route exact path="/Jobs" component={Jobs} />
       <Route component={NotFound} />

@@ -1,7 +1,22 @@
 import {Component} from 'react'
-import MainContainer from './JobsStyledComponents'
+import Cookies from 'js-cookie'
+import MainContainer from './JobsStyledComponent'
 
 class Jobs extends Component {
+  componentDidMount = async () => {
+    const jobsURL = 'https://apis.ccbp.in/jobs'
+    const jwtToken = Cookies.get('jwtToken')
+    const options = {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+      method: 'GET',
+    }
+    const response = await fetch(jobsURL, options)
+    const data = await response.json()
+    console.log(data)
+  }
+
   render() {
     return (
       <MainContainer>
@@ -14,7 +29,7 @@ class Jobs extends Component {
           <div>
             <h1>Type of Employment</h1>
             <input id="fullTime" type="checkbox" />
-            <lable htmlFor="fullTime">Full Time</lable>
+            <label htmlFor="fullTime">Full Time</label>
           </div>
           <div>
             <h1>Salary Range</h1>
