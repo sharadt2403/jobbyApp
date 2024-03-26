@@ -1,11 +1,31 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-import MainContainer from './JobsStyledComponent'
+import {Redirect} from 'react-router-dom'
+import MainContainer from './JobsStyledComponents'
+import Headers from './Header'
+
+const apiConstants = {
+  profileInitial: 'PROFILE_INITIAL',
+  profileLoading: 'PROFILE_LOADING',
+  profileSuccess: 'PROFILE_SUCCESS',
+  profileFailed: 'PROFILE_FAILED',
+  jobsInitial: 'JOBS_INITIAL',
+  jobsLoading: 'JOBS_LOADING',
+  jobsSuccess: 'JOBS_SUCCESS',
+  jobsFailed: 'JOBS_FAILED',
+}
 
 class Jobs extends Component {
+  state = {
+    apiConstantsStatus: apiConstants,
+    isProfile: apiConstants.profileInitial,
+    jobDetails: apiConstants.jobsInitial,
+  }
+
   componentDidMount = async () => {
+    this.setState({isProfile: apiConstants.profileLoading})
     const jobsURL = 'https://apis.ccbp.in/jobs'
-    const jwtToken = Cookies.get('jwtToken')
+    const jwtToken = Cookies.get('jwt_token')
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -14,52 +34,107 @@ class Jobs extends Component {
     }
     const response = await fetch(jobsURL, options)
     const data = await response.json()
-    console.log(data)
+    console.log(response)
+    if (response.ok === true) {
+      this.setState({isProfile: apiConstants.profileSuccess})
+    }
+    if (response.status === 401) {
+      this.setState({isProfile: apiConstants.profileFailed})
+    }
+  }
+
+  renderProfileLoadingView = () => {
+    const {isProfile} = this.state
+    return (
+      <div>
+        <h1>Loading View</h1>
+      </div>
+    )
+  }
+
+  renderProfileSuccessView = () => {
+    const {isProfile} = this.state
+    return (
+      <div>
+        <h1>Success View</h1>
+        <div>
+          <img src="" alt="" />
+          <h1>Rahul Attuluri</h1>
+          <p>Lead Software Developer and AI</p>
+        </div>
+      </div>
+    )
+  }
+
+  renderProfileFailedView = () => {
+    const {isProfile} = this.state
+    return (
+      <div>
+        <h1>Failed View</h1>
+      </div>
+    )
+  }
+
+  renderProfile = () => {
+    const {isProfile} = this.state
+    switch (isProfile) {
+      case apiConstants.profileLoading:
+        return this.renderProfileLoadingView()
+      case apiConstants.profileSuccess:
+        return this.renderProfileSuccessView()
+      case apiConstants.profileFailed:
+        return this.renderProfileFailedView()
+      default:
+        return null
+    }
   }
 
   render() {
+    const jwtToken = Cookies.get('jwt_token')
+    if (jwtToken === undefined) {
+      return <Redirect to="/login" />
+    }
     return (
-      <MainContainer>
-        <div className="left-container">
-          <div>
-            <img src="" alt="" />
-            <h1>Rahul Attuluri</h1>
-            <p>Lead Software Developer and AI</p>
-          </div>
-          <div>
-            <h1>Type of Employment</h1>
-            <input id="fullTime" type="checkbox" />
-            <label htmlFor="fullTime">Full Time</label>
-          </div>
-          <div>
-            <h1>Salary Range</h1>
-          </div>
-        </div>
-        <div className="right-container">
-          <input type="search" />
-          <div className="job-card">
+      <>
+        <Headers />
+        <MainContainer>
+          <div className="left-container">
+            <div>{this.renderProfile()}</div>
             <div>
-              <img src="" alt="" />
+              <h1>Type of Employment</h1>
+              <input id="fullTime" type="checkbox" />
+              <label htmlFor="fullTime">Full Time</label>
+            </div>
+            <div>
+              <h1>Salary Range</h1>
+            </div>
+          </div>
+          <div className="right-container">
+            <input type="search" />
+            <div className="job-card">
               <div>
-                <h1>Devops Engineer</h1>
-                <p>Rating</p>
+                <img src="" alt="" />
+                <div>
+                  <h1>Devops Engineer</h1>
+                  <p>Rating</p>
+                </div>
+              </div>
+              <div>
+                <p>Delhi</p>
+                <p>Internship</p>
+                <div>10 LPA</div>
+              </div>
+              <div>
+                <p>Description</p>
+                <p>
+                  We are looking for a DevOps Engineer with a minimum of 5 years
+                  of industry
+                </p>
               </div>
             </div>
-            <div>
-              <p>Delhi</p>
-              <p>Internship</p>
-              <div>10 LPA</div>
-            </div>
-            <div>
-              <p>Description</p>
-              <p>
-                We are looking for a DevOps Engineer with a minimum of 5 years
-                of industry
-              </p>
-            </div>
           </div>
-        </div>
-      </MainContainer>
+        </MainContainer>
+      </>
     )
   }
 }

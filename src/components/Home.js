@@ -1,4 +1,6 @@
 import {Component} from 'react'
+import Cookies from 'js-cookie'
+import {Redirect} from 'react-router-dom'
 
 class Home extends Component {
   findJobs = () => {
@@ -8,6 +10,10 @@ class Home extends Component {
   }
 
   render() {
+    const jwtToken = Cookies.get('jwt_token')
+    if (jwtToken === undefined) {
+      return <Redirect to="/login" />
+    }
     return (
       <div>
         <h1>Find The Job That Fits Your Life</h1>

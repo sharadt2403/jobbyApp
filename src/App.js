@@ -1,6 +1,5 @@
 import './App.css'
 import {Switch, Route} from 'react-router-dom'
-import Header from './components/Header'
 import Home from './components/Home'
 import Jobs from './components/Jobs'
 import NotFound from './components/NotFound'
@@ -48,7 +47,6 @@ const salaryRangesList = [
 // Replace your code here
 const App = () => (
   <div>
-    <Header />
     <Switch>
       <Route exact path="/login" component={Login} />
       <Route exact path="/" component={Home} />

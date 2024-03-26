@@ -5,3 +5,5 @@ const MainContainer = styled.div`
   flex-direction: row;
 `
 export default MainContainer
+
+//  JobsStyledComponent
