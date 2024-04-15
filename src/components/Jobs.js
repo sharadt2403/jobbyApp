@@ -1,7 +1,8 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {Redirect} from 'react-router-dom'
-import MainContainer from './JobsStyledComponents'
+import {IoIosContact} from 'react-icons/io'
+import {MainContainer, ProfileBg} from './JobsStyledComponent'
 import Headers from './Header'
 
 const apiConstants = {
@@ -55,14 +56,11 @@ class Jobs extends Component {
   renderProfileSuccessView = () => {
     const {isProfile} = this.state
     return (
-      <div>
-        <h1>Success View</h1>
-        <div>
-          <img src="" alt="" />
-          <h1>Rahul Attuluri</h1>
-          <p>Lead Software Developer and AI</p>
-        </div>
-      </div>
+      <ProfileBg>
+        <IoIosContact />
+        <p>Rahul Attuluri</p>
+        <p>Lead Software Developer and AI</p>
+      </ProfileBg>
     )
   }
 
@@ -100,13 +98,29 @@ class Jobs extends Component {
         <MainContainer>
           <div className="left-container">
             <div>{this.renderProfile()}</div>
+            <hr />
             <div>
               <h1>Type of Employment</h1>
               <input id="fullTime" type="checkbox" />
               <label htmlFor="fullTime">Full Time</label>
+              <input id="partTime" type="checkbox" />
+              <label htmlFor="partTime">Part Time</label>
+              <input id="freeLance" type="checkbox" />
+              <label htmlFor="freeLance">Freelance</label>
+              <input id="internship" type="checkbox" />
+              <label htmlFor="internship">Internship</label>
             </div>
+            <hr />
             <div>
               <h1>Salary Range</h1>
+              <input id="fullTime" type="checkbox" />
+              <label htmlFor="fullTime">Full Time</label>
+              <input id="partTime" type="checkbox" />
+              <label htmlFor="partTime">Part Time</label>
+              <input id="freeLance" type="checkbox" />
+              <label htmlFor="freeLance">Freelance</label>
+              <input id="internship" type="checkbox" />
+              <label htmlFor="internship">Internship</label>
             </div>
           </div>
           <div className="right-container">
