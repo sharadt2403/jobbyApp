@@ -1,9 +1,9 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {Redirect} from 'react-router-dom'
-import {IoIosContact} from 'react-icons/io'
-import {MainContainer, ProfileBg} from './JobsStyledComponent'
+import {MainContainer, ProfileBg} from './JobsStyledComp'
 import Headers from './Header'
+import JobDetailsList from './JobDetailsList'
 
 const apiConstants = {
   profileInitial: 'PROFILE_INITIAL',
@@ -20,12 +20,19 @@ class Jobs extends Component {
   state = {
     apiConstantsStatus: apiConstants,
     isProfile: apiConstants.profileInitial,
-    jobDetails: apiConstants.jobsInitial,
+    profileDetails: [],
+    isJob: apiConstants.jobsInitial,
+    jobDetails: [],
   }
 
-  componentDidMount = async () => {
+  componentDidMount = () => {
+    this.profileDisplay()
+    this.jobDisplay()
+  }
+
+  profileDisplay = async () => {
     this.setState({isProfile: apiConstants.profileLoading})
-    const jobsURL = 'https://apis.ccbp.in/jobs'
+    const profileURL = 'https://apis.ccbp.in/profile'
     const jwtToken = Cookies.get('jwt_token')
     const options = {
       headers: {
@@ -33,45 +40,47 @@ class Jobs extends Component {
       },
       method: 'GET',
     }
-    const response = await fetch(jobsURL, options)
+    const response = await fetch(profileURL, options)
     const data = await response.json()
-    console.log(response)
+    const profileData = {
+      name: data.profile_details.name,
+      profileImageUrl: data.profile_details.profile_image_url,
+      shortBio: data.profile_details.short_bio,
+    }
     if (response.ok === true) {
-      this.setState({isProfile: apiConstants.profileSuccess})
+      this.setState({
+        isProfile: apiConstants.profileSuccess,
+        profileDetails: profileData,
+      })
     }
     if (response.status === 401) {
       this.setState({isProfile: apiConstants.profileFailed})
     }
   }
 
-  renderProfileLoadingView = () => {
-    const {isProfile} = this.state
-    return (
-      <div>
-        <h1>Loading View</h1>
-      </div>
-    )
-  }
+  renderProfileLoadingView = () => (
+    <div>
+      <h1>Profile Loading View</h1>
+    </div>
+  )
 
   renderProfileSuccessView = () => {
-    const {isProfile} = this.state
+    const {isProfile, profileDetails} = this.state
+
     return (
       <ProfileBg>
-        <IoIosContact />
-        <p>Rahul Attuluri</p>
-        <p>Lead Software Developer and AI</p>
+        <img src={profileDetails.profileImageUrl} alt="profileImage" />
+        <p>{profileDetails.name}</p>
+        <p>{profileDetails.shortBio}</p>
       </ProfileBg>
     )
   }
 
-  renderProfileFailedView = () => {
-    const {isProfile} = this.state
-    return (
-      <div>
-        <h1>Failed View</h1>
-      </div>
-    )
-  }
+  renderProfileFailedView = () => (
+    <div>
+      <h1>Profile Failed View</h1>
+    </div>
+  )
 
   renderProfile = () => {
     const {isProfile} = this.state
@@ -82,6 +91,91 @@ class Jobs extends Component {
         return this.renderProfileSuccessView()
       case apiConstants.profileFailed:
         return this.renderProfileFailedView()
+      default:
+        return null
+    }
+  }
+
+  jobDisplay = async () => {
+    this.setState({isJob: apiConstants.jobsLoading})
+    const jobsURL = 'https://apis.ccbp.in/jobs'
+    const jwtToken = Cookies.get('jwt_token')
+    const options = {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+      method: 'GET',
+    }
+    const response = await fetch(jobsURL, options)
+    const data = await response.json()
+    // console.log(response)
+    // console.log(data.jobs[0])
+    const jobData = data.jobs.map(each => ({
+      companyLogoUrl: each.company_logo_url,
+      employmentType: each.employment_type,
+      id: each.id,
+      jobDescription: each.job_description,
+      location: each.location,
+      packagePerAnnum: each.package_per_annum,
+      rating: each.rating,
+      title: each.title,
+    }))
+    if (response.ok === true) {
+      this.setState({isJobs: apiConstants.jobsSuccess, jobDetails: jobData})
+    }
+    if (response.status === 401) {
+      this.setState({isJobs: apiConstants.jobsFailed})
+    }
+  }
+
+  renderJobsLoadingView = () => (
+    <div>
+      <h1>Jobs Loading View</h1>
+    </div>
+  )
+
+  clickedJobId = id => {
+    // const {history} = props
+    console.log(id)
+    // const jwtToken = Cookies.get('jwt_token')
+    // console.log(jwtToken)
+    // if (jwtToken !== undefined) {
+    //   history.push(`/Jobs/${id}`)
+    // }
+  }
+
+  renderJobsSuccessView = () => {
+    const {jobDetails} = this.state
+    return (
+      <div>
+        <ul>
+          {jobDetails.map(item => (
+            <JobDetailsList
+              item={item}
+              key={item.id}
+              clickedJobId={this.clickedJobId}
+            />
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  renderJobsFailedView = () => (
+    <div>
+      <h1>Jobs Failed View</h1>
+    </div>
+  )
+
+  renderJobs = () => {
+    const {isJobs} = this.state
+    switch (isJobs) {
+      case apiConstants.jobsLoading:
+        return this.renderJobsLoadingView()
+      case apiConstants.jobsSuccess:
+        return this.renderJobsSuccessView()
+      case apiConstants.jobsFailed:
+        return this.renderJobsFailedView()
       default:
         return null
     }
@@ -125,27 +219,7 @@ class Jobs extends Component {
           </div>
           <div className="right-container">
             <input type="search" />
-            <div className="job-card">
-              <div>
-                <img src="" alt="" />
-                <div>
-                  <h1>Devops Engineer</h1>
-                  <p>Rating</p>
-                </div>
-              </div>
-              <div>
-                <p>Delhi</p>
-                <p>Internship</p>
-                <div>10 LPA</div>
-              </div>
-              <div>
-                <p>Description</p>
-                <p>
-                  We are looking for a DevOps Engineer with a minimum of 5 years
-                  of industry
-                </p>
-              </div>
-            </div>
+            <div>{this.renderJobs()}</div>
           </div>
         </MainContainer>
       </>
