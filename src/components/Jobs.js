@@ -1,7 +1,9 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {Redirect} from 'react-router-dom'
-import {MainContainer, ProfileBg} from './JobsStyledComp'
+import {BsSearch} from 'react-icons/bs'
+import {Loader} from 'react-loader-spinner'
+import {MainContainer, ProfileBg, SearchBar} from './JobsStyledComp'
 import Headers from './Header'
 import JobDetailsList from './JobDetailsList'
 
@@ -23,12 +25,26 @@ class Jobs extends Component {
     profileDetails: [],
     isJob: apiConstants.jobsInitial,
     jobDetails: [],
+    employmentType: '',
+    minimumPackage: '',
+    search: '',
   }
 
   componentDidMount = () => {
     this.profileDisplay()
     this.jobDisplay()
   }
+
+  loader = () => (
+    <div className="loader-container" data-testid="loader">
+      <Loader
+        type="three-dots-loading"
+        color="#ffffff"
+        height="50"
+        width="50"
+      />
+    </div>
+  )
 
   profileDisplay = async () => {
     this.setState({isProfile: apiConstants.profileLoading})
@@ -58,11 +74,12 @@ class Jobs extends Component {
     }
   }
 
-  renderProfileLoadingView = () => (
-    <div>
-      <h1>Profile Loading View</h1>
-    </div>
-  )
+  renderProfileLoadingView = () => {
+    // <div>
+    //   <h1>Profile Loading View</h1>
+    // </div>
+    this.loader()
+  }
 
   renderProfileSuccessView = () => {
     const {isProfile, profileDetails} = this.state
@@ -76,9 +93,19 @@ class Jobs extends Component {
     )
   }
 
+  clickedFailedView = () => {
+    this.profileDisplay()
+  }
+
   renderProfileFailedView = () => (
     <div>
-      <h1>Profile Failed View</h1>
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+        alt="failure view"
+      />
+      <button type="button" onClick={this.clickedFailedView}>
+        Retry
+      </button>
     </div>
   )
 
@@ -97,8 +124,10 @@ class Jobs extends Component {
   }
 
   jobDisplay = async () => {
+    const {employmentType, minimumPackage, search} = this.state
     this.setState({isJob: apiConstants.jobsLoading})
-    const jobsURL = 'https://apis.ccbp.in/jobs'
+    const jobsURL = `https://apis.ccbp.in/jobs?employment_type=${employmentType}&minimum_package=${minimumPackage}&search=${search}`
+    // const jobsURL = `https://apis.ccbp.in/jobs`
     const jwtToken = Cookies.get('jwt_token')
     const options = {
       headers: {
@@ -108,8 +137,6 @@ class Jobs extends Component {
     }
     const response = await fetch(jobsURL, options)
     const data = await response.json()
-    // console.log(response)
-    // console.log(data.jobs[0])
     const jobData = data.jobs.map(each => ({
       companyLogoUrl: each.company_logo_url,
       employmentType: each.employment_type,
@@ -128,20 +155,8 @@ class Jobs extends Component {
     }
   }
 
-  renderJobsLoadingView = () => (
-    <div>
-      <h1>Jobs Loading View</h1>
-    </div>
-  )
-
-  clickedJobId = id => {
-    // const {history} = props
-    console.log(id)
-    // const jwtToken = Cookies.get('jwt_token')
-    // console.log(jwtToken)
-    // if (jwtToken !== undefined) {
-    //   history.push(`/Jobs/${id}`)
-    // }
+  renderJobsLoadingView = () => {
+    this.loader()
   }
 
   renderJobsSuccessView = () => {
@@ -150,20 +165,26 @@ class Jobs extends Component {
       <div>
         <ul>
           {jobDetails.map(item => (
-            <JobDetailsList
-              item={item}
-              key={item.id}
-              clickedJobId={this.clickedJobId}
-            />
+            <JobDetailsList item={item} key={item.id} />
           ))}
         </ul>
       </div>
     )
   }
 
+  clickedJobFailedView = () => {
+    this.jobDisplay()
+  }
+
   renderJobsFailedView = () => (
     <div>
-      <h1>Jobs Failed View</h1>
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
+        alt="failure view"
+      />
+      <button type="button" onClick={this.clickedJobFailedView}>
+        Retry
+      </button>
     </div>
   )
 
@@ -179,6 +200,12 @@ class Jobs extends Component {
       default:
         return null
     }
+  }
+
+  searchClicked = () => {
+    console.log('searchhhh')
+    this.setState({search: 'Frontend'})
+    this.jobDisplay()
   }
 
   render() {
@@ -218,7 +245,17 @@ class Jobs extends Component {
             </div>
           </div>
           <div className="right-container">
-            <input type="search" />
+            <SearchBar>
+              <input type="search" />
+              <button
+                type="button"
+                onClick={this.searchClicked}
+                data-testid="searchButton"
+                style={{cursor: 'pointer'}}
+              >
+                .<BsSearch className="search-icon" />
+              </button>
+            </SearchBar>
             <div>{this.renderJobs()}</div>
           </div>
         </MainContainer>

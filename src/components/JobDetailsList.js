@@ -1,8 +1,7 @@
 import {Link} from 'react-router-dom'
-import Cookies from 'js-cookie'
 
 const JobDetailsList = props => {
-  const {item, clickedJobId} = props
+  const {item} = props
   const {
     companyLogoUrl,
     employmentType,
@@ -14,10 +13,6 @@ const JobDetailsList = props => {
     title,
   } = item
 
-  const clickedId = () => {
-    clickedJobId(id)
-  }
-
   return (
     <Link to={`/jobs/${id}`}>
       <div className="job-card" style={{fontSize: '10px'}}>
@@ -25,12 +20,10 @@ const JobDetailsList = props => {
           <img
             style={{width: '50px', height: '50px'}}
             src={companyLogoUrl}
-            alt="Company Logo"
+            alt="job details company logo"
           />
           <div>
-            <h1 onClick={clickedId} style={{cursor: 'pointer'}}>
-              {title}
-            </h1>
+            <h1 style={{cursor: 'pointer'}}>{title}</h1>
             <p>{rating}</p>
           </div>
         </div>

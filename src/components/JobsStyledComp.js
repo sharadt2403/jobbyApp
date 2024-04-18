@@ -15,4 +15,11 @@ export const ProfileBg = styled.div`
   margin: 10px;
 `
 
+export const SearchBar = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  border: 1px solid black;
+`
+
 //  JobsStyledComponent
