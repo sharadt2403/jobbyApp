@@ -45,13 +45,22 @@ const salaryRangesList = [
   },
 ]
 
+const testing = [1]
+
 // Replace your code here
 const App = () => (
   <div>
     <Switch>
       <Route exact path="/login" component={Login} />
       <Route exact path="/" component={Home} />
-      <Route exact path="/Jobs" component={Jobs} />
+      <Route
+        exact
+        path="/Jobs"
+        component={Jobs}
+        employmentList={employmentTypesList}
+        salaryList={salaryRangesList}
+        tes={testing}
+      />
       <Route exact path="/Jobs/:id" component={JobItemDetails} />
       <Route component={NotFound} />
     </Switch>

@@ -1,8 +1,20 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
+import {
+  ColumnContainer,
+  RowContainer,
+  CompanyLogo,
+  Image,
+} from './JobItemStyledComp'
 
 class JobItemDetails extends Component {
-  state = {jobItem: {}, isLoading: true}
+  state = {
+    jobItem: {},
+    lifeAtCompany: {},
+    skills: [],
+    similarJobs: [],
+    isLoading: true,
+  }
 
   componentDidMount = () => {
     this.getJobDetails()
@@ -26,63 +38,68 @@ class JobItemDetails extends Component {
     const jobResponse = await getMethod.json()
     console.log(jobResponse.job_details.company_logo_url)
     const jD = jobResponse.job_details
-    const jsimilar = jobResponse.similar_jobs
-    const modifiedJD = {
-      jobDetails: {
-        companyLogoUrl: jD.company_logo_url,
-        companyWebsiteUrl: jD.company_website_url,
-        employmentType: jD.employment_type,
-        id: jD.id,
-        jobDescription: jD.job_description,
-        lifeAtCompany: {
-          description: jD.life_at_company.description,
-          imageUrl: jD.life_at_company.image_url,
-        },
-        location: jD.location,
-        packagePerAnnum: jD.package_per_annum,
-        rating: jD.rating,
-        skills: jD.skills.map(each => ({
-          imageUrl: each.image_url,
-          name: each.name,
-        })),
-        title: jD.title,
-      },
-      similarJobs: jsimilar.map(each => ({
-        companyLogoUrlSimilar: each.company_logo_url,
-        employmentTypeSimilar: each.employment_type,
-        idSimilar: each.id,
-        jobDescriptionSimilar: each.job_description,
-        locationSimilar: each.location,
-        ratingSimilar: each.rating,
-        titleSimilar: each.title,
-      })),
+    const jdSimilar = jobResponse.similar_jobs
+
+    const jobItem = {
+      companyLogoUrl: jD.company_logo_url,
+      companyWebsiteUrl: jD.company_website_url,
+      employmentType: jD.employment_type,
+      id: jD.id,
+      jobDescription: jD.job_description,
+      location: jD.location,
+      packagePerAnnum: jD.package_per_annum,
+      rating: jD.rating,
+      title: jD.title,
     }
 
+    const lifeAtCompany = {
+      description: jD.life_at_company.description,
+      imageUrlAtCompany: jD.life_at_company.image_url,
+    }
+    const skills = jD.skills.map(each => ({
+      imageUrl: each.image_url,
+      name: each.name,
+    }))
+
+    const similarJobs = jdSimilar.map(each => ({
+      companyLogoUrlSimilar: each.company_logo_url,
+      employmentTypeSimilar: each.employment_type,
+      idSimilar: each.id,
+      jobDescriptionSimilar: each.job_description,
+      locationSimilar: each.location,
+      ratingSimilar: each.rating,
+      titleSimilar: each.title,
+    }))
+
     if (getMethod.ok === true) {
-      this.setState({jobItem: modifiedJD, isLoading: false})
+      this.setState({
+        jobItem,
+        lifeAtCompany,
+        skills,
+        similarJobs,
+        isLoading: false,
+      })
     }
   }
 
   render() {
-    const {jobItem, isLoading} = this.state
-    const {jobDetails, similarJobs} = jobItem
-
+    const {jobItem, lifeAtCompany, skills, similarJobs} = this.state
     console.log(similarJobs)
-    // console.log(companyLogoUrl)
-    // const {
-    //   companyLogoUrl,
-    //   companyWebsiteUrl,
+    console.log(skills)
+    // companyWebsiteUrl,
     //   employmentType,
     //   id,
     //   jobDescription,
-    //   lifeAtCompany,
     //   location,
     //   packagePerAnnum,
     //   rating,
-    //   skills,
     //   title,
-    // } = jobDetails
-    // const {description, imageUrl} = lifeAtCompany
+    const {companyLogoUrl, rating} = jobItem
+
+    const {description, imageUrlAtCompany} = lifeAtCompany
+
+    // const {imageUrl, name} = skills
+
     // const {
     //   companyLogoUrlSimilar,
     //   employmentTypeSimilar,
@@ -92,11 +109,121 @@ class JobItemDetails extends Component {
     //   ratingSimilar,
     //   titleSimilar,
     // } = similarJobs[0]
+
     return (
-      <div>
-        <h1>jobDescription}</h1>
-        <h1>jobDescriptionSimilar}</h1>
-      </div>
+      <ColumnContainer>
+        <ColumnContainer>
+          <RowContainer>
+            <CompanyLogo src={companyLogoUrl} alt="companyLogoUrl" />
+            <ColumnContainer>
+              <h1>TITLE</h1>
+              <RowContainer>
+                <p>icon rating</p>
+                <p>{rating}</p>
+              </RowContainer>
+            </ColumnContainer>
+          </RowContainer>
+
+          <RowContainer>
+            <RowContainer>
+              <RowContainer>
+                <p>icon location </p>
+                <p>location </p>
+              </RowContainer>
+              <RowContainer>
+                <p>icon location </p>
+                <p>location </p>
+              </RowContainer>
+            </RowContainer>
+            <div>
+              <p>28 LPA</p>
+            </div>
+          </RowContainer>
+          <hr />
+          <ColumnContainer>
+            <RowContainer>
+              <h1>Description</h1>
+              <RowContainer>
+                <p>Visit</p>
+                <p>icon Visit</p>
+              </RowContainer>
+            </RowContainer>
+            <p>{description}</p>
+          </ColumnContainer>
+          <ColumnContainer>
+            <h1>Skills</h1>
+            <RowContainer>
+              <RowContainer>
+                <CompanyLogo src="" alt="" />
+                <p>HTML 5</p>
+              </RowContainer>
+            </RowContainer>
+            <ColumnContainer>
+              <h1>Life at Company</h1>
+              <RowContainer>
+                <p>From building the future.....</p>
+                <Image src="" alt="" />
+              </RowContainer>
+            </ColumnContainer>
+          </ColumnContainer>
+        </ColumnContainer>
+        {/* Similar jobs container */}
+        <ColumnContainer>
+          <h1>Similar Jobs</h1>
+          <RowContainer>
+            <ColumnContainer>
+              <RowContainer>
+                <CompanyLogo src={companyLogoUrl} alt="companyLogoUrl" />
+                <ColumnContainer>
+                  <h1>TITLE</h1>
+                  <RowContainer>
+                    <p>icon rating</p>
+                    <p>{rating}</p>
+                  </RowContainer>
+                </ColumnContainer>
+              </RowContainer>
+              <ColumnContainer>
+                <h1>Description</h1>
+                <p>{description}</p>
+              </ColumnContainer>
+            </ColumnContainer>
+            {/* section 2 */}
+            <ColumnContainer>
+              <RowContainer>
+                <CompanyLogo src={companyLogoUrl} alt="companyLogoUrl" />
+                <ColumnContainer>
+                  <h1>TITLE</h1>
+                  <RowContainer>
+                    <p>icon rating</p>
+                    <p>{rating}</p>
+                  </RowContainer>
+                </ColumnContainer>
+              </RowContainer>
+              <ColumnContainer>
+                <h1>Description</h1>
+                <p>{description}</p>
+              </ColumnContainer>
+            </ColumnContainer>
+            {/* section 3 */}
+            <ColumnContainer>
+              <RowContainer>
+                <CompanyLogo src={companyLogoUrl} alt="companyLogoUrl" />
+                <ColumnContainer>
+                  <h1>TITLE</h1>
+                  <RowContainer>
+                    <p>icon rating</p>
+                    <p>{rating}</p>
+                  </RowContainer>
+                </ColumnContainer>
+              </RowContainer>
+              <ColumnContainer>
+                <h1>Description</h1>
+                <p>{description}</p>
+              </ColumnContainer>
+            </ColumnContainer>
+          </RowContainer>
+        </ColumnContainer>
+      </ColumnContainer>
     )
   }
 }

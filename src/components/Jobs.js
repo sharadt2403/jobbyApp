@@ -20,7 +20,6 @@ const apiConstants = {
 
 class Jobs extends Component {
   state = {
-    apiConstantsStatus: apiConstants,
     isProfile: apiConstants.profileInitial,
     profileDetails: [],
     isJob: apiConstants.jobsInitial,
@@ -28,6 +27,7 @@ class Jobs extends Component {
     employmentType: '',
     minimumPackage: '',
     search: '',
+    inputValue: '',
   }
 
   componentDidMount = () => {
@@ -75,14 +75,11 @@ class Jobs extends Component {
   }
 
   renderProfileLoadingView = () => {
-    // <div>
-    //   <h1>Profile Loading View</h1>
-    // </div>
     this.loader()
   }
 
   renderProfileSuccessView = () => {
-    const {isProfile, profileDetails} = this.state
+    const {profileDetails} = this.state
 
     return (
       <ProfileBg>
@@ -202,10 +199,19 @@ class Jobs extends Component {
     }
   }
 
+  inputChange = e => {
+    this.setState({inputValue: e.target.value})
+  }
+
   searchClicked = () => {
+    const {inputValue} = this.state
+    this.setState({search: inputValue}, this.jobDisplay)
     console.log('searchhhh')
-    this.setState({search: 'Frontend'})
-    this.jobDisplay()
+  }
+
+  onKeyUpInput = () => {
+    const {inputValue} = this.state
+    this.setState({search: inputValue}, this.jobDisplay)
   }
 
   render() {
@@ -213,6 +219,12 @@ class Jobs extends Component {
     if (jwtToken === undefined) {
       return <Redirect to="/login" />
     }
+
+    const {search} = this.state
+    console.log(search)
+    const {employmentList, salaryList, tes} = this.props
+    console.log('testing:  ', tes)
+
     return (
       <>
         <Headers />
@@ -222,6 +234,7 @@ class Jobs extends Component {
             <hr />
             <div>
               <h1>Type of Employment</h1>
+              {}
               <input id="fullTime" type="checkbox" />
               <label htmlFor="fullTime">Full Time</label>
               <input id="partTime" type="checkbox" />
@@ -246,7 +259,11 @@ class Jobs extends Component {
           </div>
           <div className="right-container">
             <SearchBar>
-              <input type="search" />
+              <input
+                type="search"
+                onChange={this.inputChange}
+                onKeyUp={this.onKeyUpInput}
+              />
               <button
                 type="button"
                 onClick={this.searchClicked}

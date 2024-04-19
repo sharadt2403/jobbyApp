@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {Redirect} from 'react-router-dom'
+import Header from './Header'
 
 class Home extends Component {
   findJobs = () => {
@@ -16,14 +17,18 @@ class Home extends Component {
     }
     return (
       <div>
-        <h1>Find The Job That Fits Your Life</h1>
-        <p>
-          Millions of people are searching for jobs, salary information, company
-          reviews. Find the job that fits your abilities and potential.
-        </p>
-        <button onClick={this.findJobs} type="button">
-          Find Jobs
-        </button>
+        <Header />
+        <div>
+          <h1>Find The Job That Fits Your Life</h1>
+          <p>
+            Millions of people are searching for jobs, salary information,
+            company reviews. Find the job that fits your abilities and
+            potential.
+          </p>
+          <button onClick={this.findJobs} type="button">
+            Find Jobs
+          </button>
+        </div>
       </div>
     )
   }
