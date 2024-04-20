@@ -6,6 +6,45 @@ import {Loader} from 'react-loader-spinner'
 import {MainContainer, ProfileBg, SearchBar} from './JobsStyledComp'
 import Headers from './Header'
 import JobDetailsList from './JobDetailsList'
+import EmploymentId from './jobsEmploymentId'
+
+const employmentTypesList = [
+  {
+    label: 'Full Time',
+    employmentTypeId: 'FULLTIME',
+  },
+  {
+    label: 'Part Time',
+    employmentTypeId: 'PARTTIME',
+  },
+  {
+    label: 'Freelance',
+    employmentTypeId: 'FREELANCE',
+  },
+  {
+    label: 'Internship',
+    employmentTypeId: 'INTERNSHIP',
+  },
+]
+
+const salaryRangesList = [
+  {
+    salaryRangeId: '1000000',
+    label: '10 LPA and above',
+  },
+  {
+    salaryRangeId: '2000000',
+    label: '20 LPA and above',
+  },
+  {
+    salaryRangeId: '3000000',
+    label: '30 LPA and above',
+  },
+  {
+    salaryRangeId: '4000000',
+    label: '40 LPA and above',
+  },
+]
 
 const apiConstants = {
   profileInitial: 'PROFILE_INITIAL',
@@ -122,9 +161,9 @@ class Jobs extends Component {
 
   jobDisplay = async () => {
     const {employmentType, minimumPackage, search} = this.state
+    console.log(employmentType)
     this.setState({isJob: apiConstants.jobsLoading})
     const jobsURL = `https://apis.ccbp.in/jobs?employment_type=${employmentType}&minimum_package=${minimumPackage}&search=${search}`
-    // const jobsURL = `https://apis.ccbp.in/jobs`
     const jwtToken = Cookies.get('jwt_token')
     const options = {
       headers: {
@@ -214,16 +253,17 @@ class Jobs extends Component {
     this.setState({search: inputValue}, this.jobDisplay)
   }
 
+  empClick = id => {
+    this.setState(prevState => ({
+      employmentType: prevState.employmentType + id,
+    }))
+  }
+
   render() {
     const jwtToken = Cookies.get('jwt_token')
     if (jwtToken === undefined) {
       return <Redirect to="/login" />
     }
-
-    const {search} = this.state
-    console.log(search)
-    const {employmentList, salaryList, tes} = this.props
-    console.log('testing:  ', tes)
 
     return (
       <>
@@ -234,15 +274,21 @@ class Jobs extends Component {
             <hr />
             <div>
               <h1>Type of Employment</h1>
-              {}
-              <input id="fullTime" type="checkbox" />
+              {employmentTypesList.map(each => (
+                <EmploymentId
+                  eachItem={each}
+                  empClick={this.empClick}
+                  key={each.employmentTypeId}
+                />
+              ))}
+              {/* <input id="fullTime" type="checkbox" />
               <label htmlFor="fullTime">Full Time</label>
               <input id="partTime" type="checkbox" />
               <label htmlFor="partTime">Part Time</label>
               <input id="freeLance" type="checkbox" />
               <label htmlFor="freeLance">Freelance</label>
               <input id="internship" type="checkbox" />
-              <label htmlFor="internship">Internship</label>
+              <label htmlFor="internship">Internship</label> */}
             </div>
             <hr />
             <div>
