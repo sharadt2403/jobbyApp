@@ -122,7 +122,7 @@ class Jobs extends Component {
 
     return (
       <ProfileBg>
-        <img src={profileDetails.profileImageUrl} alt="profileImage" />
+        <img src={profileDetails.profileImageUrl} alt="profile" />
         <p>{profileDetails.name}</p>
         <p>{profileDetails.shortBio}</p>
       </ProfileBg>
@@ -173,6 +173,7 @@ class Jobs extends Component {
     }
     const response = await fetch(jobsURL, options)
     const data = await response.json()
+
     const jobData = data.jobs.map(each => ({
       companyLogoUrl: each.company_logo_url,
       employmentType: each.employment_type,
@@ -183,7 +184,7 @@ class Jobs extends Component {
       rating: each.rating,
       title: each.title,
     }))
-    if (response.ok === true) {
+    if (response.ok) {
       this.setState({isJobs: apiConstants.jobsSuccess, jobDetails: jobData})
     }
     if (response.status === 401) {
@@ -195,15 +196,31 @@ class Jobs extends Component {
     this.loader()
   }
 
+  renderNoJobsView = () => (
+    <div>
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
+        alt="no jobs"
+      />
+      <h1>No Jobs View</h1>
+      <p>We could not find any jobs. Try other filters.</p>
+    </div>
+  )
+
   renderJobsSuccessView = () => {
     const {jobDetails} = this.state
+    console.log(jobDetails.length)
     return (
       <div>
-        <ul>
-          {jobDetails.map(item => (
-            <JobDetailsList item={item} key={item.id} />
-          ))}
-        </ul>
+        {jobDetails.length > 0 ? (
+          <ul>
+            {jobDetails.map(item => (
+              <JobDetailsList item={item} key={item.id} />
+            ))}
+          </ul>
+        ) : (
+          this.renderNoJobsView()
+        )}
       </div>
     )
   }
@@ -218,6 +235,8 @@ class Jobs extends Component {
         src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
         alt="failure view"
       />
+      <h1>Oops! Something Went Wrong</h1>
+      <p>We cannot seem to find the page you are looking for.</p>
       <button type="button" onClick={this.clickedJobFailedView}>
         Retry
       </button>

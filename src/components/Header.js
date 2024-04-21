@@ -1,17 +1,30 @@
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
+import Cookies from 'js-cookie'
 
-const Header = () => (
-  <div>
-    <h1>Header</h1>
-    <ul>
-      <Link to="/">
-        <li>Home</li>
-      </Link>
-      <Link to="/jobs">
-        <li>Jobs</li>
-      </Link>
-    </ul>
-  </div>
-)
+const Header = props => {
+  const {history} = props
 
-export default Header
+  const logout = () => {
+    Cookies.remove('jwt_token')
+    history.replace('/login')
+  }
+
+  return (
+    <div>
+      <h1>Header</h1>
+      <ul>
+        <Link to="/">
+          <li>Home</li>
+        </Link>
+        <Link to="/jobs">
+          <li>Jobs</li>
+        </Link>
+        <button type="button" onClick={logout}>
+          Logout
+        </button>
+      </ul>
+    </div>
+  )
+}
+
+export default withRouter(Header)

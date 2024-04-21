@@ -84,9 +84,7 @@ class JobItemDetails extends Component {
 
   render() {
     const {jobItem, lifeAtCompany, skills, similarJobs} = this.state
-    console.log(similarJobs)
-    console.log(skills)
-    // companyWebsiteUrl,
+
     //   employmentType,
     //   id,
     //   jobDescription,
@@ -94,11 +92,13 @@ class JobItemDetails extends Component {
     //   packagePerAnnum,
     //   rating,
     //   title,
-    const {companyLogoUrl, rating} = jobItem
+
+    const {companyLogoUrl, companyWebsiteUrl, rating} = jobItem
+    console.log(companyWebsiteUrl)
 
     const {description, imageUrlAtCompany} = lifeAtCompany
 
-    // const {imageUrl, name} = skills
+    const {imageUrl, name} = skills
 
     // const {
     //   companyLogoUrlSimilar,
@@ -114,7 +114,7 @@ class JobItemDetails extends Component {
       <ColumnContainer>
         <ColumnContainer>
           <RowContainer>
-            <CompanyLogo src={companyLogoUrl} alt="companyLogoUrl" />
+            <CompanyLogo src={companyLogoUrl} alt="job details company logo" />
             <ColumnContainer>
               <h1>TITLE</h1>
               <RowContainer>
@@ -144,7 +144,9 @@ class JobItemDetails extends Component {
             <RowContainer>
               <h1>Description</h1>
               <RowContainer>
-                <p>Visit</p>
+                <a target="_blank" rel="noreferrer" href={companyWebsiteUrl}>
+                  Visit
+                </a>
                 <p>icon Visit</p>
               </RowContainer>
             </RowContainer>
@@ -154,7 +156,7 @@ class JobItemDetails extends Component {
             <h1>Skills</h1>
             <RowContainer>
               <RowContainer>
-                <CompanyLogo src="" alt="" />
+                <CompanyLogo src="" alt="job details company logo" />
                 <p>HTML 5</p>
               </RowContainer>
             </RowContainer>
@@ -162,7 +164,7 @@ class JobItemDetails extends Component {
               <h1>Life at Company</h1>
               <RowContainer>
                 <p>From building the future.....</p>
-                <Image src="" alt="" />
+                <Image src={imageUrlAtCompany} alt="life at company" />
               </RowContainer>
             </ColumnContainer>
           </ColumnContainer>
@@ -173,7 +175,10 @@ class JobItemDetails extends Component {
           <RowContainer>
             <ColumnContainer>
               <RowContainer>
-                <CompanyLogo src={companyLogoUrl} alt="companyLogoUrl" />
+                <CompanyLogo
+                  src={companyLogoUrl}
+                  alt="similar job company logo"
+                />
                 <ColumnContainer>
                   <h1>TITLE</h1>
                   <RowContainer>
@@ -190,7 +195,10 @@ class JobItemDetails extends Component {
             {/* section 2 */}
             <ColumnContainer>
               <RowContainer>
-                <CompanyLogo src={companyLogoUrl} alt="companyLogoUrl" />
+                <CompanyLogo
+                  src={companyLogoUrl}
+                  alt="similar job company logo"
+                />
                 <ColumnContainer>
                   <h1>TITLE</h1>
                   <RowContainer>
@@ -207,7 +215,10 @@ class JobItemDetails extends Component {
             {/* section 3 */}
             <ColumnContainer>
               <RowContainer>
-                <CompanyLogo src={companyLogoUrl} alt="companyLogoUrl" />
+                <CompanyLogo
+                  src={companyLogoUrl}
+                  alt="similar job company logo"
+                />
                 <ColumnContainer>
                   <h1>TITLE</h1>
                   <RowContainer>
