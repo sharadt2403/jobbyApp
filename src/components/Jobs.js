@@ -6,7 +6,8 @@ import {Loader} from 'react-loader-spinner'
 import {MainContainer, ProfileBg, SearchBar} from './JobsStyledComp'
 import Headers from './Header'
 import JobDetailsList from './JobDetailsList'
-import EmploymentId from './jobsEmploymentId'
+import EmploymentId from './JobsEmploymentId'
+import Salary from './JobsSalary'
 
 const employmentTypesList = [
   {
@@ -64,6 +65,7 @@ class Jobs extends Component {
     isJob: apiConstants.jobsInitial,
     jobDetails: [],
     employmentType: '',
+    employmentTypeArr: [],
     minimumPackage: '',
     search: '',
     inputValue: '',
@@ -161,7 +163,7 @@ class Jobs extends Component {
 
   jobDisplay = async () => {
     const {employmentType, minimumPackage, search} = this.state
-    console.log(employmentType)
+
     this.setState({isJob: apiConstants.jobsLoading})
     const jobsURL = `https://apis.ccbp.in/jobs?employment_type=${employmentType}&minimum_package=${minimumPackage}&search=${search}`
     const jwtToken = Cookies.get('jwt_token')
@@ -209,7 +211,6 @@ class Jobs extends Component {
 
   renderJobsSuccessView = () => {
     const {jobDetails} = this.state
-    console.log(jobDetails.length)
     return (
       <div>
         {jobDetails.length > 0 ? (
@@ -264,7 +265,6 @@ class Jobs extends Component {
   searchClicked = () => {
     const {inputValue} = this.state
     this.setState({search: inputValue}, this.jobDisplay)
-    console.log('searchhhh')
   }
 
   onKeyUpInput = () => {
@@ -273,9 +273,23 @@ class Jobs extends Component {
   }
 
   empClick = id => {
-    this.setState(prevState => ({
-      employmentType: prevState.employmentType + id,
-    }))
+    const {employmentTypeArr} = this.state
+    const isTypeAvailable = employmentTypeArr.includes(id)
+
+    if (isTypeAvailable) {
+      const b = employmentTypeArr.indexOf(id)
+      employmentTypeArr.splice(b, 1)
+      const d = employmentTypeArr.join(',')
+      this.setState({employmentType: d}, this.jobDisplay)
+    } else {
+      employmentTypeArr.push(id)
+      const d = employmentTypeArr.join(',')
+      this.setState({employmentType: d}, this.jobDisplay)
+    }
+  }
+
+  salaryClick = id => {
+    this.setState({minimumPackage: id}, this.jobDisplay)
   }
 
   render() {
@@ -300,26 +314,17 @@ class Jobs extends Component {
                   key={each.employmentTypeId}
                 />
               ))}
-              {/* <input id="fullTime" type="checkbox" />
-              <label htmlFor="fullTime">Full Time</label>
-              <input id="partTime" type="checkbox" />
-              <label htmlFor="partTime">Part Time</label>
-              <input id="freeLance" type="checkbox" />
-              <label htmlFor="freeLance">Freelance</label>
-              <input id="internship" type="checkbox" />
-              <label htmlFor="internship">Internship</label> */}
             </div>
             <hr />
             <div>
               <h1>Salary Range</h1>
-              <input id="fullTime" type="checkbox" />
-              <label htmlFor="fullTime">Full Time</label>
-              <input id="partTime" type="checkbox" />
-              <label htmlFor="partTime">Part Time</label>
-              <input id="freeLance" type="checkbox" />
-              <label htmlFor="freeLance">Freelance</label>
-              <input id="internship" type="checkbox" />
-              <label htmlFor="internship">Internship</label>
+              {salaryRangesList.map(each => (
+                <Salary
+                  eachItem={each}
+                  salaryClick={this.salaryClick}
+                  key={each.salaryRangeId}
+                />
+              ))}
             </div>
           </div>
           <div className="right-container">

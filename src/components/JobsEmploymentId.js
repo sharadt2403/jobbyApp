@@ -4,7 +4,6 @@ const EmploymentId = props => {
 
   const employmentClicked = () => {
     empClick(employmentTypeId)
-    console.log(employmentTypeId)
   }
 
   return (
