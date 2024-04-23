@@ -29,7 +29,7 @@ class Login extends Component {
     const response = await fetch(loginURL, options)
     const statusCode = await response.status
     const data = await response.json()
-    if (statusCode === 200) {
+    if (response.ok) {
       this.onSuccess(data.jwt_token)
     } else {
       this.onFailure(data.error_msg)
@@ -67,7 +67,7 @@ class Login extends Component {
           <input
             onChange={this.usernameChange}
             id="username"
-            type="username"
+            type="text"
             value={username}
           />
           <label htmlFor="password">PASSWORD</label>

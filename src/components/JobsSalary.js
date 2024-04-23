@@ -15,7 +15,7 @@ const Salary = props => {
         value={salaryRangeId}
         name="Salary"
       />
-      <label htmlFor={salaryClicked}>{label}</label>
+      <label htmlFor={salaryRangeId}>{label}</label>
     </div>
   )
 }

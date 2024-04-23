@@ -11,7 +11,12 @@ const Header = props => {
 
   return (
     <div>
-      <h1>Header</h1>
+      <Link to="/">
+        <img
+          src="https://assets.ccbp.in/frontend/react-js/logo-img.png "
+          alt="website logo"
+        />
+      </Link>
       <ul>
         <Link to="/">
           <li>Home</li>

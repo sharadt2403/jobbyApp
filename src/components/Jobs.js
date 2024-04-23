@@ -1,6 +1,5 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-import {Redirect} from 'react-router-dom'
 import {BsSearch} from 'react-icons/bs'
 import {Loader} from 'react-loader-spinner'
 import {MainContainer, ProfileBg, SearchBar} from './JobsStyledComp'
@@ -77,14 +76,11 @@ class Jobs extends Component {
   }
 
   loader = () => (
-    <div className="loader-container" data-testid="loader">
-      <Loader
-        type="three-dots-loading"
-        color="#ffffff"
-        height="50"
-        width="50"
-      />
-    </div>
+    <>
+      <div className="profile-loader-container" data-testid="loader">
+        <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+      </div>
+    </>
   )
 
   profileDisplay = async () => {
@@ -174,19 +170,20 @@ class Jobs extends Component {
       method: 'GET',
     }
     const response = await fetch(jobsURL, options)
-    const data = await response.json()
 
-    const jobData = data.jobs.map(each => ({
-      companyLogoUrl: each.company_logo_url,
-      employmentType: each.employment_type,
-      id: each.id,
-      jobDescription: each.job_description,
-      location: each.location,
-      packagePerAnnum: each.package_per_annum,
-      rating: each.rating,
-      title: each.title,
-    }))
     if (response.ok) {
+      const data = await response.json()
+      console.log(response)
+      const jobData = data.jobs.map(each => ({
+        companyLogoUrl: each.company_logo_url,
+        employmentType: each.employment_type,
+        id: each.id,
+        jobDescription: each.job_description,
+        location: each.location,
+        packagePerAnnum: each.package_per_annum,
+        rating: each.rating,
+        title: each.title,
+      }))
       this.setState({isJobs: apiConstants.jobsSuccess, jobDetails: jobData})
     }
     if (response.status === 401) {
@@ -293,11 +290,6 @@ class Jobs extends Component {
   }
 
   render() {
-    const jwtToken = Cookies.get('jwt_token')
-    if (jwtToken === undefined) {
-      return <Redirect to="/login" />
-    }
-
     return (
       <>
         <Headers />
