@@ -3,10 +3,10 @@ import Cookies from 'js-cookie'
 import {BsSearch} from 'react-icons/bs'
 import {Loader} from 'react-loader-spinner'
 import {MainContainer, ProfileBg, SearchBar} from './JobsStyledComp'
-import Headers from './Header'
-import JobDetailsList from './JobDetailsList'
-import EmploymentId from './JobsEmploymentId'
-import Salary from './JobsSalary'
+import Header from '../Header/Header'
+import JobDetailsList from '../JobDetailsList/JobDetailsList'
+import EmploymentId from '../JobEmploymentFilter/JobsEmploymentId'
+import Salary from '../JobSalaryFilter/JobsSalary'
 
 const employmentTypesList = [
   {
@@ -292,7 +292,8 @@ class Jobs extends Component {
   render() {
     return (
       <>
-        <Headers />
+        <Header />
+
         <MainContainer>
           <div className="left-container">
             <div>{this.renderProfile()}</div>
