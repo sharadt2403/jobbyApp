@@ -1,5 +1,6 @@
 import {Link, withRouter} from 'react-router-dom'
 import Cookies from 'js-cookie'
+import './Header.css'
 
 const Header = props => {
   const {history} = props
@@ -10,21 +11,24 @@ const Header = props => {
   }
 
   return (
-    <div>
+    <div className="header-container">
       <Link to="/">
         <img
+          className="logo-image"
           src="https://assets.ccbp.in/frontend/react-js/logo-img.png "
           alt="website logo"
         />
       </Link>
-      <ul>
-        <Link to="/">
-          <li>Home</li>
-        </Link>
-        <Link to="/jobs">
-          <li>Jobs</li>
-        </Link>
-        <button type="button" onClick={logout}>
+      <ul className="list-container">
+        <div className="options-container">
+          <Link to="/">
+            <li className="options">Home</li>
+          </Link>
+          <Link to="/jobs">
+            <li className="options">Jobs</li>
+          </Link>
+        </div>
+        <button className="logout-button" type="button" onClick={logout}>
           Logout
         </button>
       </ul>
