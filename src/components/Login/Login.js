@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import {Redirect} from 'react-router-dom'
 import Cookies from 'js-cookie'
+import './Login.css'
 
 class Login extends Component {
   state = {username: '', password: '', showErrorMsge: false, message: ''}
@@ -56,29 +57,41 @@ class Login extends Component {
       return <Redirect to="/" />
     }
     return (
-      <div>
-        <form onSubmit={this.onSubmitForm}>
+      <div className="main-container">
+        <form className="form-container" onSubmit={this.onSubmitForm}>
           <img
-            style={{width: '100px', height: '100px'}}
+            className="image"
             src="https://assets.ccbp.in/frontend/react-js/logo-img.png"
             alt="website logo"
           />
-          <label htmlFor="username">USERNAME</label>
+          <label className="label" htmlFor="username">
+            USERNAME
+          </label>
           <input
+            className="input"
             onChange={this.usernameChange}
             id="username"
             type="text"
             value={username}
+            placeholder="Username"
           />
-          <label htmlFor="password">PASSWORD</label>
+          <label className="label" htmlFor="password">
+            PASSWORD
+          </label>
           <input
+            className="input"
             onChange={this.passwordChange}
             id="password"
             type="password"
             value={password}
+            placeholder="Password"
           />
-          {showErrorMsge && <p>{message}</p>}
-          <button type="submit">Login</button>
+          <button className="login-button" type="submit">
+            Login
+          </button>
+          <div className="error-msge-container">
+            {showErrorMsge && <p className="error-message">*{message}</p>}
+          </div>
         </form>
       </div>
     )
