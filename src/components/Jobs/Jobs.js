@@ -214,7 +214,7 @@ class Jobs extends Component {
   renderJobsSuccessView = () => {
     const {jobDetails} = this.state
     return (
-      <div className="jobs-details-container">
+      <div>
         {jobDetails.length > 0 ? (
           <ul>
             {jobDetails.map(item => (
@@ -343,7 +343,7 @@ class Jobs extends Component {
                 <BsSearch className="search-icon" />
               </button>
             </div>
-            <div>{this.renderJobs()}</div>
+            <div className="list-scroll">{this.renderJobs()}</div>
           </div>
         </div>
       </>
