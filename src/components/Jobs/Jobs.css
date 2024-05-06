@@ -1,0 +1,85 @@
+* {
+  box-sizing: border-box;
+  font-size: 20px;
+}
+
+.jobs-main-container {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  width: 100vw;
+  height: 100vh;
+  padding: 1rem;
+}
+
+.left-container {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: auto auto auto;
+  overflow-wrap: normal;
+  row-gap: 1.5rem;
+  color: rgb(0, 0, 0);
+}
+
+.profileDetails {
+  display: grid;
+  height: 180px;
+  width: 200px;
+  padding: 1rem;
+  background-image: url('https://assets.ccbp.in/frontend/react-js/profile-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.profileImage {
+  width: 40px;
+  height: 40px;
+}
+
+.profileHeading {
+  font-size: 1rem;
+  color: cornflowerblue;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #646464;
+}
+
+.profileParagraph {
+  font-size: 0.8rem;
+  color: slategray;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #646464;
+}
+
+.right-container {
+  display: grid;
+  grid-template-rows: auto auto;
+  row-gap: 1rem;
+}
+
+.search-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 1rem;
+  border: 1px solid black;
+  width: 100%;
+}
+
+.home-input {
+  font-size: 1rem;
+  border: none;
+}
+
+.home-search {
+  width: 40px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.jobs-list {
+  overflow-y: scroll;
+}
+
+.jobs-details-container {
+  display: grid;
+  flex-direction: column;
+}

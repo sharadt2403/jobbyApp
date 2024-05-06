@@ -7,6 +7,7 @@ import Header from '../Header/Header'
 import JobDetailsList from '../JobDetailsList/JobDetailsList'
 import EmploymentId from '../JobEmploymentFilter/JobsEmploymentId'
 import Salary from '../JobSalaryFilter/JobsSalary'
+import './Jobs.css'
 
 const employmentTypesList = [
   {
@@ -119,11 +120,15 @@ class Jobs extends Component {
     const {profileDetails} = this.state
 
     return (
-      <ProfileBg>
-        <img src={profileDetails.profileImageUrl} alt="profile" />
-        <p>{profileDetails.name}</p>
-        <p>{profileDetails.shortBio}</p>
-      </ProfileBg>
+      <div className="profileDetails">
+        <img
+          className="profileImage"
+          src={profileDetails.profileImageUrl}
+          alt="profile"
+        />
+        <p className="profileHeading">{profileDetails.name}</p>
+        <p className="profileParagraph">{profileDetails.shortBio}</p>
+      </div>
     )
   }
 
@@ -209,7 +214,7 @@ class Jobs extends Component {
   renderJobsSuccessView = () => {
     const {jobDetails} = this.state
     return (
-      <div>
+      <div className="jobs-details-container">
         {jobDetails.length > 0 ? (
           <ul>
             {jobDetails.map(item => (
@@ -294,7 +299,7 @@ class Jobs extends Component {
       <>
         <Header />
 
-        <MainContainer>
+        <div className="jobs-main-container">
           <div className="left-container">
             <div>{this.renderProfile()}</div>
             <hr />
@@ -321,24 +326,26 @@ class Jobs extends Component {
             </div>
           </div>
           <div className="right-container">
-            <SearchBar>
+            <div className="search-container">
               <input
+                className="home-input"
                 type="search"
                 onChange={this.inputChange}
                 onKeyUp={this.onKeyUpInput}
               />
+              {/* eslint-disable-next-line */}
               <button
+                className="home-search"
                 type="button"
                 onClick={this.searchClicked}
                 data-testid="searchButton"
-                style={{cursor: 'pointer'}}
               >
-                .<BsSearch className="search-icon" />
+                <BsSearch className="search-icon" />
               </button>
-            </SearchBar>
+            </div>
             <div>{this.renderJobs()}</div>
           </div>
-        </MainContainer>
+        </div>
       </>
     )
   }

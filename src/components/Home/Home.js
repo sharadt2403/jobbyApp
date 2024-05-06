@@ -6,17 +6,19 @@ import './Home.css'
 class Home extends Component {
   render() {
     return (
-      <div>
+      <div className="home-container">
         <Header />
         <div className="bg-home">
-          <h1>Find The Job That Fits Your Life</h1>
-          <p>
+          <h1 className="heading">Find The Job That Fits Your Life</h1>
+          <p className="paragraph">
             Millions of people are searching for jobs, salary information,
             company reviews. Find the job that fits your abilities and
             potential.
           </p>
           <Link to="/jobs">
-            <button type="button">Find Jobs</button>
+            <button type="button" className="button">
+              Find Jobs
+            </button>
           </Link>
         </div>
       </div>

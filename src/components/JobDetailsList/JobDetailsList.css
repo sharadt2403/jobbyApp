@@ -1,0 +1,24 @@
+* {
+  font-size: 20px;
+}
+
+.details-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.details-image {
+  width: 140px;
+  height: 60px;
+  margin: 0.8rem;
+}
+
+.details-title {
+  font-size: 0.8rem;
+  font-family: 'Roboto';
+  justify-self: start;
+  color: #ffffff;
+  margin: 0.5rem 0.5rem 0rem 0rem;
+}

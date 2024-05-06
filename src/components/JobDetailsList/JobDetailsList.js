@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom'
+import './JobDetailsList.css'
 
 const JobDetailsList = props => {
   const {item} = props
@@ -15,8 +16,8 @@ const JobDetailsList = props => {
 
   return (
     <Link to={`/jobs/${id}`}>
-      <div className="job-card" style={{fontSize: '10px'}}>
-        <div>
+      <div className="details-container">
+        <div className="details-title-container">
           <img
             style={{width: '50px', height: '50px'}}
             src={companyLogoUrl}
