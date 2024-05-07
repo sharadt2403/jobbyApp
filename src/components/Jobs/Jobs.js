@@ -214,9 +214,9 @@ class Jobs extends Component {
   renderJobsSuccessView = () => {
     const {jobDetails} = this.state
     return (
-      <div>
+      <>
         {jobDetails.length > 0 ? (
-          <ul>
+          <ul className="ul-container">
             {jobDetails.map(item => (
               <JobDetailsList item={item} key={item.id} />
             ))}
@@ -224,7 +224,7 @@ class Jobs extends Component {
         ) : (
           this.renderNoJobsView()
         )}
-      </div>
+      </>
     )
   }
 
@@ -298,11 +298,12 @@ class Jobs extends Component {
     return (
       <>
         <Header />
-
         <div className="jobs-main-container">
-          <div className="left-container">
+          <div className="left-main-container">
             <div>{this.renderProfile()}</div>
-            <hr />
+            <div style={{margin: '0'}}>
+              <hr style={{margin: '0'}} />
+            </div>
             <div>
               <h1>Type of Employment</h1>
               {employmentTypesList.map(each => (
@@ -313,7 +314,9 @@ class Jobs extends Component {
                 />
               ))}
             </div>
-            <hr />
+            <div style={{margin: '0'}}>
+              <hr style={{margin: '0'}} />
+            </div>
             <div>
               <h1>Salary Range</h1>
               {salaryRangesList.map(each => (
@@ -325,25 +328,28 @@ class Jobs extends Component {
               ))}
             </div>
           </div>
-          <div className="right-container">
+          <div className="right-main-container">
             <div className="search-container">
-              <input
-                className="home-input"
-                type="search"
-                onChange={this.inputChange}
-                onKeyUp={this.onKeyUpInput}
-              />
-              {/* eslint-disable-next-line */}
-              <button
-                className="home-search"
-                type="button"
-                onClick={this.searchClicked}
-                data-testid="searchButton"
-              >
-                <BsSearch className="search-icon" />
-              </button>
+              <div className="searchBar">
+                <input
+                  className="home-input"
+                  placeholder="Search"
+                  type="search"
+                  onChange={this.inputChange}
+                  onKeyUp={this.onKeyUpInput}
+                />
+                {/* eslint-disable-next-line */}
+                <button
+                  className="home-search"
+                  type="button"
+                  onClick={this.searchClicked}
+                  data-testid="searchButton"
+                >
+                  <BsSearch className="search-icon" />
+                </button>
+              </div>
             </div>
-            <div className="list-scroll">{this.renderJobs()}</div>
+            {this.renderJobs()}
           </div>
         </div>
       </>

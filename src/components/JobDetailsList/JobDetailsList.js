@@ -25,21 +25,26 @@ const JobDetailsList = props => {
             alt="job details company logo"
           />
           <div className="details-title-sub-container">
-            <h1 style={{cursor: 'pointer'}}>{title}</h1>
-            <p>{rating}</p>
+            <h1 style={{cursor: 'pointer', margin: '0'}}>{title}</h1>
+            <p style={{margin: '0'}}>{rating}</p>
           </div>
         </div>
-        <div>
-          <div className="location-container">
-            <p>{location}</p>
-            <p>{employmentType}</p>
-            <div>{packagePerAnnum}</div>
-          </div>
-          <hr />
+        <div style={{marginTop: '5px'}}>
+          <hr style={{margin: '0'}} />
         </div>
-        <div>
-          <p>Description</p>
-          <p>{jobDescription}</p>
+
+        <div className="location-container">
+          <p style={{margin: '0'}}>{location}</p>
+          <p style={{margin: '0'}}>{employmentType}</p>
+          <div style={{margin: '0'}}>{packagePerAnnum}</div>
+        </div>
+
+        <div style={{margin: '0'}}>
+          <hr style={{margin: '0'}} />
+        </div>
+        <div className="details-description">
+          <h1>Description</h1>
+          <p style={{margin: '0', fontSize: '15px'}}>{jobDescription}</p>
         </div>
       </div>
     </Link>
