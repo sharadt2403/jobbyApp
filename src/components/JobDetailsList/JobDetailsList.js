@@ -1,5 +1,7 @@
 import {Link} from 'react-router-dom'
 import './JobDetailsList.css'
+import {FaStar, FaSuitcase, FaMoneyBill} from 'react-icons/fa'
+import {MdLocationOn} from 'react-icons/md'
 
 const JobDetailsList = props => {
   const {item} = props
@@ -26,7 +28,10 @@ const JobDetailsList = props => {
           />
           <div className="details-title-sub-container">
             <h1 style={{cursor: 'pointer', margin: '0'}}>{title}</h1>
-            <p style={{margin: '0'}}>{rating}</p>
+            <div className="details-rating-container">
+              <FaStar className="rating-icon" />
+              <p style={{margin: '0'}}>{rating}</p>
+            </div>
           </div>
         </div>
         <div style={{marginTop: '5px'}}>
@@ -34,9 +39,18 @@ const JobDetailsList = props => {
         </div>
 
         <div className="location-container">
-          <p style={{margin: '0'}}>{location}</p>
-          <p style={{margin: '0'}}>{employmentType}</p>
-          <div style={{margin: '0'}}>{packagePerAnnum}</div>
+          <div className="location-icon-container">
+            <MdLocationOn className="location-icon" />
+            <p style={{margin: '0'}}>{location}</p>
+          </div>
+          <div className="location-icon-container">
+            <FaSuitcase />
+            <p style={{margin: '0'}}>{employmentType}</p>
+          </div>
+          <div className="location-icon-container">
+            <FaMoneyBill />
+            <div style={{margin: '0'}}>{packagePerAnnum}</div>
+          </div>
         </div>
 
         <div style={{margin: '0'}}>

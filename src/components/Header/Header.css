@@ -38,9 +38,14 @@
 }
 
 .options {
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-family: 'Roboto';
   color: #ffffff;
+}
+
+.options:hover {
+  transform: scale(1.1);
+  transition: 0.5s linear;
 }
 
 .link {
@@ -57,4 +62,9 @@
   border-radius: 0.2rem;
   padding: 0.5em;
   cursor: pointer;
+}
+
+.logout-button:hover {
+  transform: scale(1.1);
+  transition: 0.5s linear;
 }

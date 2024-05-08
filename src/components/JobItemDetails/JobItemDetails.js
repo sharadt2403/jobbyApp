@@ -6,6 +6,7 @@ import {
   CompanyLogo,
   Image,
 } from './JobItemStyledComp'
+import './JobItemDetails.css'
 
 class JobItemDetails extends Component {
   state = {

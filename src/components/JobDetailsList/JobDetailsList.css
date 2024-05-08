@@ -16,7 +16,7 @@
   padding: 1rem;
   border-radius: 1rem;
   border: none;
-  margin: 10px;
+  margin-bottom: 0.5rem;
 }
 
 .details-title-container {
@@ -32,6 +32,14 @@
   margin: 0 0 0 1rem;
 }
 
+.details-rating-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 0.5rem;
+  justify-content: start;
+  align-items: center;
+}
+
 .details-image {
   width: 140px;
   height: 60px;
@@ -45,11 +53,27 @@
   margin: 0.5rem 0.5rem 0rem 0rem;
 }
 
+.rating-icon {
+  color: rgb(253, 250, 64);
+}
+
 .location-container {
   display: grid;
   grid-template-columns: auto auto auto;
   justify-content: space-around;
   margin-left: 1rem;
+}
+
+.location-icon-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 0.5rem;
+  justify-content: start;
+  align-items: center;
+}
+
+.location-icon {
+  color: rgb(255, 255, 255);
 }
 
 .details-description {
