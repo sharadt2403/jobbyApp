@@ -1,0 +1,113 @@
+* {
+  font-size: 20px;
+}
+
+.jobItem-link {
+  display: grid;
+  text-decoration: none;
+  background-color: aquamarine;
+  width: 5rem;
+  height: 2rem;
+  margin-bottom: 1rem;
+}
+
+.jobItem-main-container {
+  display: grid;
+  padding: 1rem;
+  align-content: flex-start;
+}
+
+.jobItem-back-icon {
+  color: rgb(255, 255, 255);
+  width: 20px;
+  height: 20px;
+}
+
+.jobItem-back-button {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  align-items: center;
+  text-decoration: none;
+  background-color: rgba(0, 130, 222, 0.895);
+  color: white;
+  border: none;
+  border-radius: 0.4rem;
+  margin: 0 0 1rem 0;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.jobItem-container {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  background-color: rgb(81, 81, 81);
+  margin-bottom: 2rem;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: none;
+  margin-bottom: 0.5rem;
+}
+
+.jobItem-title-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  align-items: center;
+}
+
+.jobItem-title-sub-container {
+  display: grid;
+  grid-template-rows: auto auto;
+  margin: 0 0 0 1rem;
+}
+
+.jobItem-rating-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 0.5rem;
+  justify-content: start;
+  align-items: center;
+}
+
+.jobItem-image {
+  width: 140px;
+  height: 60px;
+}
+
+.jobItem-title {
+  font-size: 0.8rem;
+  font-family: 'Roboto';
+  justify-self: start;
+  color: #ffffff;
+  margin: 0.5rem 0.5rem 0rem 0rem;
+}
+
+.jobItem-rating-container {
+  color: rgb(253, 250, 64);
+}
+
+.jobItem-location-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: space-around;
+  margin-left: 1rem;
+}
+
+.jobItem-location-icon-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 0.5rem;
+  justify-content: start;
+  align-items: center;
+}
+
+.jobItem-location-container {
+  color: rgb(255, 255, 255);
+}
+
+.jobItem-description {
+  width: 600px;
+}

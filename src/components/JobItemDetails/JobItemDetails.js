@@ -1,12 +1,10 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-import {
-  ColumnContainer,
-  RowContainer,
-  CompanyLogo,
-  Image,
-} from './JobItemStyledComp'
+import {Link} from 'react-router-dom'
 import './JobItemDetails.css'
+import {FaStar, FaSuitcase, FaMoneyBill} from 'react-icons/fa'
+import {MdLocationOn} from 'react-icons/md'
+import {IoIosArrowBack} from 'react-icons/io'
 
 class JobItemDetails extends Component {
   state = {
@@ -86,20 +84,23 @@ class JobItemDetails extends Component {
   render() {
     const {jobItem, lifeAtCompany, skills, similarJobs} = this.state
 
-    //   employmentType,
-    //   id,
-    //   jobDescription,
-    //   location,
-    //   packagePerAnnum,
-    //   rating,
-    //   title,
-
-    const {companyLogoUrl, companyWebsiteUrl, rating} = jobItem
+    const {
+      companyLogoUrl,
+      companyWebsiteUrl,
+      employmentType,
+      id,
+      jobDescription,
+      location,
+      packagePerAnnum,
+      rating,
+      title,
+    } = jobItem
     console.log(companyWebsiteUrl)
 
     const {description, imageUrlAtCompany} = lifeAtCompany
+    console.log('life', lifeAtCompany)
 
-    const {imageUrl, name} = skills
+    // const {imageUrl, name} = skills
 
     // const {
     //   companyLogoUrlSimilar,
@@ -112,130 +113,113 @@ class JobItemDetails extends Component {
     // } = similarJobs[0]
 
     return (
-      <ColumnContainer>
-        <ColumnContainer>
-          <RowContainer>
-            <CompanyLogo src={companyLogoUrl} alt="job details company logo" />
-            <ColumnContainer>
-              <h1>TITLE</h1>
-              <RowContainer>
-                <p>icon rating</p>
-                <p>{rating}</p>
-              </RowContainer>
-            </ColumnContainer>
-          </RowContainer>
-
-          <RowContainer>
-            <RowContainer>
-              <RowContainer>
-                <p>icon location </p>
-                <p>location </p>
-              </RowContainer>
-              <RowContainer>
-                <p>icon location </p>
-                <p>location </p>
-              </RowContainer>
-            </RowContainer>
-            <div>
-              <p>28 LPA</p>
+      <div className="jobItem-main-container">
+        <Link to="/jobs" className="jobItem-link">
+          <button className="jobItem-back-button" type="button">
+            <IoIosArrowBack className="jobItem-back-icon" />
+            Back
+          </button>
+        </Link>
+        <div className="jobItem-container">
+          <div className="jobItem-title-container">
+            <img
+              className="jobItem-image"
+              style={{width: '50px', height: '50px'}}
+              src={companyLogoUrl}
+              alt="job details company logo"
+            />
+            <div className="jobItem-title-sub-container">
+              <h1 style={{cursor: 'pointer', margin: '0'}}>{title}</h1>
+              <div className="jobItem-rating-container">
+                <FaStar className="jobItem-rating-icon" />
+                <p style={{margin: '0'}}>{rating}</p>
+              </div>
             </div>
-          </RowContainer>
-          <hr />
-          <ColumnContainer>
-            <RowContainer>
-              <h1>Description</h1>
-              <RowContainer>
-                <a target="_blank" rel="noreferrer" href={companyWebsiteUrl}>
-                  Visit
-                </a>
-                <p>icon Visit</p>
-              </RowContainer>
-            </RowContainer>
-            <p>{description}</p>
-          </ColumnContainer>
-          <ColumnContainer>
+          </div>
+          <div style={{marginTop: '5px'}}>
+            <hr style={{margin: '0'}} />
+          </div>
+
+          <div className="jobItem-location-container">
+            <div className="jobItem-location-icon-container">
+              <MdLocationOn className="location-icon" />
+              <p style={{margin: '0'}}>{location}</p>
+            </div>
+            <div className="jobItem-location-icon-container">
+              <FaSuitcase />
+              <p style={{margin: '0'}}>{employmentType}</p>
+            </div>
+            <div className="jobItem-location-icon-container">
+              <FaMoneyBill />
+              <div style={{margin: '0'}}>{packagePerAnnum}</div>
+            </div>
+          </div>
+
+          <div style={{margin: '0'}}>
+            <hr style={{margin: '0'}} />
+          </div>
+          <div className="jobItem-description">
+            <h1>Description</h1>
+            <p style={{margin: '0', fontSize: '15px'}}>{jobDescription}</p>
+          </div>
+          {/* Skills */}
+          <div>
             <h1>Skills</h1>
-            <RowContainer>
-              <RowContainer>
-                <CompanyLogo src="" alt="job details company logo" />
-                <p>HTML 5</p>
-              </RowContainer>
-            </RowContainer>
-            <ColumnContainer>
-              <h1>Life at Company</h1>
-              <RowContainer>
-                <p>From building the future.....</p>
-                <Image src={imageUrlAtCompany} alt="life at company" />
-              </RowContainer>
-            </ColumnContainer>
-          </ColumnContainer>
-        </ColumnContainer>
-        {/* Similar jobs container */}
-        <ColumnContainer>
+            {skills.map(each => (
+              <div>
+                <div>
+                  <img src={each.imageUrl} alt="skill" />
+                  <p>{each.name}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Life At Company */}
+          <div>
+            <div>
+              <h1>Life At Company</h1>
+              <p>{description}</p>
+            </div>
+            <img src={imageUrlAtCompany} alt="lifeAtCompany" />
+          </div>
+        </div>
+        {/* Similar Jobs */}
+        <div>
           <h1>Similar Jobs</h1>
-          <RowContainer>
-            <ColumnContainer>
-              <RowContainer>
-                <CompanyLogo
-                  src={companyLogoUrl}
-                  alt="similar job company logo"
-                />
-                <ColumnContainer>
-                  <h1>TITLE</h1>
-                  <RowContainer>
-                    <p>icon rating</p>
-                    <p>{rating}</p>
-                  </RowContainer>
-                </ColumnContainer>
-              </RowContainer>
-              <ColumnContainer>
-                <h1>Description</h1>
-                <p>{description}</p>
-              </ColumnContainer>
-            </ColumnContainer>
-            {/* section 2 */}
-            <ColumnContainer>
-              <RowContainer>
-                <CompanyLogo
-                  src={companyLogoUrl}
-                  alt="similar job company logo"
-                />
-                <ColumnContainer>
-                  <h1>TITLE</h1>
-                  <RowContainer>
-                    <p>icon rating</p>
-                    <p>{rating}</p>
-                  </RowContainer>
-                </ColumnContainer>
-              </RowContainer>
-              <ColumnContainer>
-                <h1>Description</h1>
-                <p>{description}</p>
-              </ColumnContainer>
-            </ColumnContainer>
-            {/* section 3 */}
-            <ColumnContainer>
-              <RowContainer>
-                <CompanyLogo
-                  src={companyLogoUrl}
-                  alt="similar job company logo"
-                />
-                <ColumnContainer>
-                  <h1>TITLE</h1>
-                  <RowContainer>
-                    <p>icon rating</p>
-                    <p>{rating}</p>
-                  </RowContainer>
-                </ColumnContainer>
-              </RowContainer>
-              <ColumnContainer>
-                <h1>Description</h1>
-                <p>{description}</p>
-              </ColumnContainer>
-            </ColumnContainer>
-          </RowContainer>
-        </ColumnContainer>
-      </ColumnContainer>
+          <div>
+            {similarJobs.map(each => (
+              <div className="jobItem-container">
+                <div className="jobItem-title-container">
+                  <img
+                    className="jobItem-image"
+                    style={{width: '50px', height: '50px'}}
+                    src={each.companyLogoUrlSimilar}
+                    alt="job details company logo"
+                  />
+                  <div className="jobItem-title-sub-container">
+                    <h1 style={{cursor: 'pointer', margin: '0'}}>
+                      {each.titleSimilar}
+                    </h1>
+                    <div className="jobItem-rating-container">
+                      <FaStar className="jobItem-rating-icon" />
+                      <p style={{margin: '0'}}>{each.ratingSimilar}</p>
+                    </div>
+                  </div>
+                </div>
+                <div style={{marginTop: '5px'}}>
+                  <hr style={{margin: '0'}} />
+                </div>
+                <div className="jobItem-description">
+                  <h1>Description</h1>
+                  <p style={{margin: '0', fontSize: '15px'}}>
+                    {each.jobDescriptionSimilar}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     )
   }
 }
