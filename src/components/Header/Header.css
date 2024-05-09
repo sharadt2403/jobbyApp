@@ -104,9 +104,8 @@
   display: grid;
   grid-template-columns: auto auto;
   grid-column: 2 / span 3;
-  column-gap: 0.5rem;
-  justify-content: space-between;
-  align-content: center;
+  column-gap: 2rem;
+  justify-content: center;
   margin-right: 1rem;
 }
 

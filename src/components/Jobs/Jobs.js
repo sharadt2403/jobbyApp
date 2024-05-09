@@ -7,6 +7,7 @@ import JobDetailsList from '../JobDetailsList/JobDetailsList'
 import EmploymentId from '../JobEmploymentFilter/JobsEmploymentId'
 import Salary from '../JobSalaryFilter/JobsSalary'
 import './Jobs.css'
+import Example from './OffCanvas'
 
 const employmentTypesList = [
   {
