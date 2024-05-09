@@ -189,6 +189,7 @@ class Jobs extends Component {
         title: each.title,
       }))
       this.setState({isJobs: apiConstants.jobsSuccess, jobDetails: jobData})
+      console.log(jobData)
     }
     if (response.status === 401) {
       this.setState({isJobs: apiConstants.jobsFailed})

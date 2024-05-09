@@ -24,7 +24,6 @@ class JobItemDetails extends Component {
     const {params} = match
     const {id} = params
     const jwtToken = Cookies.get('jwt_token')
-    console.log(jwtToken)
     const jobURL = `https://apis.ccbp.in/jobs/${id}`
     const getMethodOptions = {
       method: 'GET',
@@ -35,7 +34,7 @@ class JobItemDetails extends Component {
     }
     const getMethod = await fetch(jobURL, getMethodOptions)
     const jobResponse = await getMethod.json()
-    console.log(jobResponse.job_details.company_logo_url)
+
     const jD = jobResponse.job_details
     const jdSimilar = jobResponse.similar_jobs
 
@@ -95,10 +94,9 @@ class JobItemDetails extends Component {
       rating,
       title,
     } = jobItem
-    console.log(companyWebsiteUrl)
+    console.log(id)
 
     const {description, imageUrlAtCompany} = lifeAtCompany
-    console.log('life', lifeAtCompany)
 
     // const {imageUrl, name} = skills
 
@@ -111,6 +109,8 @@ class JobItemDetails extends Component {
     //   ratingSimilar,
     //   titleSimilar,
     // } = similarJobs[0]
+
+    // console.log(idSimilar)
 
     return (
       <div className="jobItem-main-container">
@@ -160,25 +160,29 @@ class JobItemDetails extends Component {
           </div>
           <div className="jobItem-description">
             <h1>Description</h1>
-            <p style={{margin: '0', fontSize: '15px'}}>{jobDescription}</p>
+            <p className="description-paragraph">{jobDescription}</p>
           </div>
           {/* Skills */}
-          <div>
+          <div className="skills-main-container">
             <h1>Skills</h1>
-            {skills.map(each => (
-              <div>
-                <div>
-                  <img src={each.imageUrl} alt="skill" />
-                  <p>{each.name}</p>
+            <div className="skills-card-container">
+              {skills.map(each => (
+                <div className="skills-container">
+                  <img
+                    className="skills-image"
+                    src={each.imageUrl}
+                    alt="skill"
+                  />
+                  <p className="skills-paragraph">{each.name}</p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
           {/* Life At Company */}
-          <div>
-            <div>
-              <h1>Life At Company</h1>
-              <p>{description}</p>
+          <div className="life-main-container">
+            <div className="life-text-container">
+              <h1>Life at Company</h1>
+              <p style={{margin: '0', fontSize: '15px'}}>{description}</p>
             </div>
             <img src={imageUrlAtCompany} alt="lifeAtCompany" />
           </div>
@@ -186,35 +190,54 @@ class JobItemDetails extends Component {
         {/* Similar Jobs */}
         <div>
           <h1>Similar Jobs</h1>
-          <div>
+          <div className="similar-job-main-container">
             {similarJobs.map(each => (
-              <div className="jobItem-container">
-                <div className="jobItem-title-container">
-                  <img
-                    className="jobItem-image"
-                    style={{width: '50px', height: '50px'}}
-                    src={each.companyLogoUrlSimilar}
-                    alt="job details company logo"
-                  />
-                  <div className="jobItem-title-sub-container">
-                    <h1 style={{cursor: 'pointer', margin: '0'}}>
-                      {each.titleSimilar}
-                    </h1>
-                    <div className="jobItem-rating-container">
-                      <FaStar className="jobItem-rating-icon" />
-                      <p style={{margin: '0'}}>{each.ratingSimilar}</p>
+              <div className="similar-job-container">
+                <a className="a-tag" href={`/jobs/${each.idSimilar}`}>
+                  <div className="similar-job-title-container">
+                    <img
+                      className="similar-job-image"
+                      src={each.companyLogoUrlSimilar}
+                      alt="job details company logo"
+                    />
+                    <div className="similar-job-title-sub-container">
+                      <h1 className="similar-job-title">{each.titleSimilar}</h1>
+                      <div className="similar-job-rating-container">
+                        <FaStar className="jobItem-rating-icon" />
+                        <p className="jobItem-rating-text">
+                          {each.ratingSimilar}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div style={{marginTop: '5px'}}>
-                  <hr style={{margin: '0'}} />
-                </div>
-                <div className="jobItem-description">
-                  <h1>Description</h1>
-                  <p style={{margin: '0', fontSize: '15px'}}>
-                    {each.jobDescriptionSimilar}
-                  </p>
-                </div>
+                  <div style={{marginTop: '5px'}}>
+                    <hr style={{margin: '0', width: '200px'}} />
+                  </div>
+                  {/* <div className="similar-job-icon-card-container">
+                    <div className="similar-job-icon-container">
+                      <MdLocationOn className="location-icon" />
+                      <p style={{margin: '0'}}>{each.locationSimilar}</p>
+                    </div>
+                    <div className="similar-job-icon-container">
+                      <FaSuitcase />
+                      <p style={{margin: '0'}}>{each.employmentTypeSimilar}</p>
+                    </div>
+                    <div className="similar-job-icon-container">
+                      <FaMoneyBill />
+                      <div style={{margin: '0'}}>click to view</div>
+                    </div>
+                  </div> */}
+
+                  {/* <div style={{margin: '0'}}>
+                    <hr style={{margin: '0'}} />
+                  </div> */}
+                  <div className="similar-job-description">
+                    <h1>Description</h1>
+                    <p style={{margin: '0', fontSize: '15px', width: '200px'}}>
+                      {each.jobDescriptionSimilar}
+                    </p>
+                  </div>
+                </a>
               </div>
             ))}
           </div>
