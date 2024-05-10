@@ -113,6 +113,20 @@
   margin: 0;
 }
 
+.description-visit-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.visit-text {
+  color: rgb(80, 153, 255);
+  font-size: 20px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
 .description-paragraph {
   font-size: 15px;
   margin: 0;

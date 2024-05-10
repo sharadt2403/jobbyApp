@@ -1,13 +1,12 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {BsSearch} from 'react-icons/bs'
-import {Loader} from 'react-loader-spinner'
+import Loader from 'react-loader-spinner'
 import Header from '../Header/Header'
 import JobDetailsList from '../JobDetailsList/JobDetailsList'
 import EmploymentId from '../JobEmploymentFilter/JobsEmploymentId'
 import Salary from '../JobSalaryFilter/JobsSalary'
 import './Jobs.css'
-import Example from './OffCanvas'
 
 const employmentTypesList = [
   {
@@ -76,14 +75,6 @@ class Jobs extends Component {
     this.jobDisplay()
   }
 
-  loader = () => (
-    <>
-      <div className="profile-loader-container" data-testid="loader">
-        <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
-      </div>
-    </>
-  )
-
   profileDisplay = async () => {
     this.setState({isProfile: apiConstants.profileLoading})
     const profileURL = 'https://apis.ccbp.in/profile'
@@ -112,9 +103,13 @@ class Jobs extends Component {
     }
   }
 
-  renderProfileLoadingView = () => {
-    this.loader()
-  }
+  loader = () => (
+    <div className="profile-loader-container" data-testid="loader">
+      <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+    </div>
+  )
+
+  renderProfileLoadingView = () => this.loader()
 
   renderProfileSuccessView = () => {
     const {profileDetails} = this.state
@@ -150,12 +145,16 @@ class Jobs extends Component {
 
   renderProfile = () => {
     const {isProfile} = this.state
+    console.log('state', isProfile)
     switch (isProfile) {
       case apiConstants.profileLoading:
+        console.log(apiConstants.profileLoading)
         return this.renderProfileLoadingView()
       case apiConstants.profileSuccess:
+        console.log(apiConstants.profileSuccess)
         return this.renderProfileSuccessView()
       case apiConstants.profileFailed:
+        console.log(apiConstants.profileFailed)
         return this.renderProfileFailedView()
       default:
         return null
@@ -178,7 +177,6 @@ class Jobs extends Component {
 
     if (response.ok) {
       const data = await response.json()
-      console.log(response)
       const jobData = data.jobs.map(each => ({
         companyLogoUrl: each.company_logo_url,
         employmentType: each.employment_type,
@@ -189,26 +187,25 @@ class Jobs extends Component {
         rating: each.rating,
         title: each.title,
       }))
-      this.setState({isJobs: apiConstants.jobsSuccess, jobDetails: jobData})
-      console.log(jobData)
+      this.setState({isJob: apiConstants.jobsSuccess, jobDetails: jobData})
     }
     if (response.status === 401) {
-      this.setState({isJobs: apiConstants.jobsFailed})
+      this.setState({isJob: apiConstants.jobsFailed})
     }
   }
 
-  renderJobsLoadingView = () => {
-    this.loader()
-  }
+  renderJobsLoadingView = () => this.loader()
 
   renderNoJobsView = () => (
-    <div>
+    <div className="no-jobs-main-container">
       <img
+        className="no-jobs-image"
         src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
         alt="no jobs"
       />
-      <h1>No Jobs View</h1>
-      <p>We could not find any jobs. Try other filters.</p>
+      <p className="no-jobs-paragraph">
+        We could not find any jobs. Try other filters.
+      </p>
     </div>
   )
 
@@ -248,13 +245,17 @@ class Jobs extends Component {
   )
 
   renderJobs = () => {
-    const {isJobs} = this.state
-    switch (isJobs) {
+    const {isJob} = this.state
+    console.log('message', isJob)
+    switch (isJob) {
       case apiConstants.jobsLoading:
+        console.log(apiConstants.jobsLoading)
         return this.renderJobsLoadingView()
       case apiConstants.jobsSuccess:
+        console.log(apiConstants.jobsSuccess)
         return this.renderJobsSuccessView()
       case apiConstants.jobsFailed:
+        console.log(apiConstants.jobsFailed)
         return this.renderJobsFailedView()
       default:
         return null
@@ -301,11 +302,11 @@ class Jobs extends Component {
         <Header />
         <div className="jobs-main-container">
           <div className="left-main-container">
-            <div>{this.renderProfile()}</div>
+            <div className="profile-container">{this.renderProfile()}</div>
             <div style={{margin: '0'}}>
               <hr style={{margin: '0'}} />
             </div>
-            <div>
+            <div className="employment-container">
               <h1>Type of Employment</h1>
               {employmentTypesList.map(each => (
                 <EmploymentId
@@ -318,7 +319,7 @@ class Jobs extends Component {
             <div style={{margin: '0'}}>
               <hr style={{margin: '0'}} />
             </div>
-            <div>
+            <div className="salary-container">
               <h1>Salary Range</h1>
               {salaryRangesList.map(each => (
                 <Salary

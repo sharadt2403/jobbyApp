@@ -2,7 +2,12 @@ import {Component} from 'react'
 import Cookies from 'js-cookie'
 import {Link} from 'react-router-dom'
 import './JobItemDetails.css'
-import {FaStar, FaSuitcase, FaMoneyBill} from 'react-icons/fa'
+import {
+  FaStar,
+  FaSuitcase,
+  FaMoneyBill,
+  FaExternalLinkAlt,
+} from 'react-icons/fa'
 import {MdLocationOn} from 'react-icons/md'
 import {IoIosArrowBack} from 'react-icons/io'
 
@@ -12,7 +17,6 @@ class JobItemDetails extends Component {
     lifeAtCompany: {},
     skills: [],
     similarJobs: [],
-    isLoading: true,
   }
 
   componentDidMount = () => {
@@ -75,7 +79,6 @@ class JobItemDetails extends Component {
         lifeAtCompany,
         skills,
         similarJobs,
-        isLoading: false,
       })
     }
   }
@@ -159,7 +162,20 @@ class JobItemDetails extends Component {
             <hr style={{margin: '0'}} />
           </div>
           <div className="jobItem-description">
-            <h1>Description</h1>
+            <div className="description-visit-container">
+              <h1>Description</h1>
+              <div className="jobItem-location-icon-container">
+                <a
+                  className="visit-text"
+                  rel="noreferrer"
+                  href={companyWebsiteUrl}
+                  target="_blank"
+                >
+                  Visit
+                </a>
+                <FaExternalLinkAlt className="visit-text" />
+              </div>
+            </div>
             <p className="description-paragraph">{jobDescription}</p>
           </div>
           {/* Skills */}

@@ -28,7 +28,7 @@ class Login extends Component {
       body: JSON.stringify(loginCredentials),
     }
     const response = await fetch(loginURL, options)
-    const statusCode = await response.status
+    // const statusCode = await response.status
     const data = await response.json()
     if (response.ok) {
       this.onSuccess(data.jwt_token)
